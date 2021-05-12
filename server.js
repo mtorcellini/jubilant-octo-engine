@@ -1,5 +1,6 @@
 // express
 const express = require('express');
+const sequelize = require('./config/connection.js');
 
 // set up handlebars engine
 const exphbs = require('express-handlebars');
@@ -15,4 +16,6 @@ app.get('/', (req, res) => {
   res.render('game');
 })
 
-app.listen(3000);
+sequelize.sync({alter : true}).then(() => {
+  app.listen(3000)
+})
