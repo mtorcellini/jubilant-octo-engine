@@ -22,4 +22,9 @@ const Game = sequelize.define('Game', {
   }
 })
 
+Game.addHook('beforeUpdate', async (game) => {
+  game.state = await JSON.parse(game.state);
+  return game;
+})
+
 module.exports = Game;
