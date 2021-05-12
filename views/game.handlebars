@@ -4,7 +4,7 @@
   <table>
     <tbody> 
       <tr class="row1" data="1">
-        <td class="rcol1" data="1"></td>
+        <td class="col1" data="1"></td>
         <td class="col2" data="2"></td>
         <td class="col3" data="3"></td>
       </tr>
@@ -31,6 +31,21 @@
 
 <script>
   $(document).ready(() => {
+
+    const id = 1; // test id 1
+
+    // load game
+    fetch(`/game/${id}`)
+    .then(data => data.json())
+    .then(data => {
+      console.log(data);
+      const xmarks = data.state.x;
+      xmarks.forEach(xmark => {
+        const xCoord = xmark[0];
+        const yCoord = xmark[1];
+        $(`.row${yCoord} .col${xCoord}`).css({background : "red"});
+      })
+    })
 
     // click listener on gameboard
     
