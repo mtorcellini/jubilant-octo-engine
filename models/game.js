@@ -1,4 +1,4 @@
-const {Model, DataTypes} = require('sequelize');
+const {DataTypes} = require('sequelize');
 
 const sequelize = require('../config/connection.js');
 
@@ -16,6 +16,9 @@ const Game = sequelize.define('Game', {
   },
   tie: {
     type: DataTypes.BOOLEAN,
+  },
+  state: {
+    type: DataTypes.JSON,
   }
 })
 
