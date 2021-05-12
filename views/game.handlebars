@@ -38,17 +38,10 @@
     fetch(`/game/${id}`)
     .then(data => data.json())
     .then(data => {
-      console.log(data);
-      const xmarks = data.state.x;
-      xmarks.forEach(xmark => {
-        const xCoord = xmark[0];
-        const yCoord = xmark[1];
-        $(`.row${yCoord} .col${xCoord}`).css({background : "red"});
-      })
+      markSquares(data);
     })
 
     // click listener on gameboard
-    
     $("#gameboard").on("click", (event) => {
       const xcoord = parseInt(event.target.getAttribute("data"));
       const ycoord = parseInt(event.target.parentElement.getAttribute("data"));
@@ -60,8 +53,26 @@
       $(event.target).css({background : "green"});
     })
 
+    // mark the game squares with each player's pieces
+    const markSquares = (data) => {
+      const xmarks = data.state.x;
+      if (xmarks) {
+        xmarks.forEach(xmark => {
+          const xCoord = xmark[0];
+          const yCoord = xmark[1];
+          $(`.row${yCoord} .col${xCoord}`).css({background : "darkblue"});
+        });
+      }
 
+      const omarks = data.state.o;
+      if (omarks) {
+        omarks.forEach(omark => {
+          const xCoord = omark[0];
+          const yCoord = omark[1];
+          $(`.row${yCoord} .col${xCoord}`).css({background : "purple"});
+        });
+      }
+    }
 
-
-  })
+});
 </script>
