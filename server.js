@@ -7,6 +7,8 @@ const routes = require('./routes');
 const exphbs = require('express-handlebars');
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 
 // set up public folder for client side assets
 app.use(express.static('public'));
