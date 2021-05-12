@@ -6,6 +6,8 @@ const exphbs = require('express-handlebars');
 
 const app = express();
 
+// set up public folder for client side assets
+app.use(express.static('public'));
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.get('/', (req, res) => {
