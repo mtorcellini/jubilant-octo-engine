@@ -19,7 +19,7 @@ body {
   width: 100px;
 }
 
-.row2 td {
+tr.row2 td {
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
 }
