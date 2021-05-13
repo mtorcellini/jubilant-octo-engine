@@ -6,7 +6,7 @@ router.post('/', async (req, res) => {
   try {
     console.log(req.body);
     const userData = await User.create(req.body);
-    res.json(userData);
+    res.status(200).render('home')
   } catch (err) {
     res.json(err);
   }
