@@ -11,7 +11,7 @@ app.set('view engine', 'handlebars');
 
 
 app.use(express.json());
-// app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:true}))
 
 
 // set up public folder for client side assets
@@ -21,7 +21,7 @@ app.use(routes);
 
 app.get('/', (req, res) => {
   // res.render('home');
-  res.render('game');
+  res.render('login');
 })
 
 sequelize.sync({alter : true}).then(() => {
