@@ -34,23 +34,43 @@
 
     const id = 1; // test id 1
 
+    let gameState = {
+      x : [],
+      o : []
+    };
+    const playerPiece = "x";
+
     // load game
     fetch(`/game/${id}`)
     .then(data => data.json())
     .then(data => {
-      markSquares(data);
+      if (data.state.hasOwnProperty("x")) {
+        // gameState = data.state;
+        markSquares(data);
+      }
     })
 
     // click listener on gameboard
-    $("#gameboard").on("click", (event) => {
-      const xcoord = parseInt(event.target.getAttribute("data"));
-      const ycoord = parseInt(event.target.parentElement.getAttribute("data"));
-      const coords = [xcoord, ycoord];
-      console.log(coords);
+    $("#gameboard").on("click", async (event) => {
+      try {
+        const xcoord = parseInt(event.target.getAttribute("data"));
+        const ycoord = parseInt(event.target.parentElement.getAttribute("data"));
+        const coords = [xcoord, ycoord];
+        console.log(coords);
 
-      $("#coords").text("You clicked on: " + coords);
+        // update gameState with new move
+        gameState[playerPiece].push(coords);
+        
+        $("#coords").text("You clicked on: " + coords);
+        console.log(gameState);
 
-      $(event.target).css({background : "green"});
+        $(event.target).css({background : "purple"});
+
+        await makeMove();
+
+      } catch (err) {
+        console.log(err);
+      }
     })
 
     // mark the game squares with each player's pieces
@@ -72,6 +92,21 @@
           $(`.row${yCoord} .col${xCoord}`).css({background : "purple"});
         });
       }
+    }
+
+    const makeMove = async () => {
+      console.log('makeMove');
+      console.log('gamestate', gameState);
+
+      // send player ID, click coordinates
+      return fetch(`/game/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body : JSON.stringify(gameState)
+      })
+
     }
 
 });
