@@ -43,7 +43,7 @@
       .then(data => data.json())
       .then(data => {
         if (data.state.hasOwnProperty("x")) {
-          // gameState = data.state;
+          gameState = data.state;
           markSquares(data);
         }
       })
@@ -122,7 +122,9 @@
         $("#coords").text("You clicked on: " + coords);
         console.log(gameState);
 
-        $(event.target).css({background : "purple"});
+
+        $(event.target).css({background : "black"});
+
 
         await makeMove();
 
