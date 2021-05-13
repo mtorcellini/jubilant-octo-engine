@@ -3,7 +3,9 @@ const {Game, User} = require('../models');
 
 router.get('/:id', async (req, res) => {
   try {
-    const gameData = await Game.findByPk(req.params.id);
+    const gameData = await Game.findByPk(req.params.id, {
+      include: User
+    });
     res.json(gameData);
   } catch (err) {
     res.json(err);

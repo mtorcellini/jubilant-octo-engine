@@ -1,4 +1,8 @@
 
 const Game = require('./Game');
+const User = require('./User');
 
-module.exports = {Game};
+Game.belongsToMany(User, {through: 'UserGames'});
+User.belongsToMany(Game, {through: 'UserGames'});
+
+module.exports = {Game, User};
