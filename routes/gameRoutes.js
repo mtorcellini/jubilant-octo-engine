@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Game} = require('../models');
+const {Game, User} = require('../models');
 
 router.get('/:id', async (req, res) => {
   try {
