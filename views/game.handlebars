@@ -24,6 +24,11 @@
 
 <p id="coords"></p>
 
+<button class="piecePicker" id="chooseX" data="x">X</button>
+<button class="piecePicker" id="chooseO" data="o">O</button>
+
+<p id="gamepiece"></p>
+
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -32,23 +37,76 @@
 <script>
   $(document).ready(() => {
 
-    const id = 1; // test id 1
+    // function to get game data, run on page load, run every 5 seconds?
+    const getGameData = async () => {
+      fetch(`/game/${id}`)
+      .then(data => data.json())
+      .then(data => {
+        if (data.state.hasOwnProperty("x")) {
+          // gameState = data.state;
+          markSquares(data);
+        }
+      })
+    }
 
+    // mark the game squares with each player's pieces
+    const markSquares = (data) => {
+      const xmarks = data.state.x;
+      if (xmarks) {
+        xmarks.forEach(xmark => {
+          const xCoord = xmark[0];
+          const yCoord = xmark[1];
+          $(`.row${yCoord} .col${xCoord}`).css({background : "darkblue", color: "white"}).text("X");
+        });
+      }
+
+      const omarks = data.state.o;
+      if (omarks) {
+        omarks.forEach(omark => {
+          const xCoord = omark[0];
+          const yCoord = omark[1];
+          $(`.row${yCoord} .col${xCoord}`).css({background : "purple", color: "white"}).text("O");
+        });
+      }
+    }
+
+    const makeMove = async () => {
+      console.log('makeMove');
+      console.log('gamestate', gameState);
+
+      // send player ID, click coordinates
+      return fetch(`/game/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body : JSON.stringify(gameState)
+      })
+    }
+
+
+    const id = 1; // test id 1
+    getGameData();
+
+    // initialize game state
     let gameState = {
       x : [],
       o : []
     };
-    const playerPiece = "x";
 
-    // load game
-    fetch(`/game/${id}`)
-    .then(data => data.json())
-    .then(data => {
-      if (data.state.hasOwnProperty("x")) {
-        // gameState = data.state;
-        markSquares(data);
-      }
+    // initialize player x or o 
+    let playerPiece = '';
+
+    // add listener to piece picker
+    $('.piecePicker').on('click', function () {
+      playerPiece = $(this).attr("data");
+      console.log(playerPiece);
+
+      // hide buttons and display confirmation message
+      $('.piecePicker').hide();
+      $('#gamepiece').text(`You're playing as '${playerPiece}'`);
     })
+
 
     // click listener on gameboard
     $("#gameboard").on("click", async (event) => {
@@ -73,41 +131,9 @@
       }
     })
 
-    // mark the game squares with each player's pieces
-    const markSquares = (data) => {
-      const xmarks = data.state.x;
-      if (xmarks) {
-        xmarks.forEach(xmark => {
-          const xCoord = xmark[0];
-          const yCoord = xmark[1];
-          $(`.row${yCoord} .col${xCoord}`).css({background : "darkblue"});
-        });
-      }
+    const getTimer = setInterval(getGameData, 1000);
 
-      const omarks = data.state.o;
-      if (omarks) {
-        omarks.forEach(omark => {
-          const xCoord = omark[0];
-          const yCoord = omark[1];
-          $(`.row${yCoord} .col${xCoord}`).css({background : "purple"});
-        });
-      }
-    }
 
-    const makeMove = async () => {
-      console.log('makeMove');
-      console.log('gamestate', gameState);
-
-      // send player ID, click coordinates
-      return fetch(`/game/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body : JSON.stringify(gameState)
-      })
-
-    }
 
 });
 </script>
