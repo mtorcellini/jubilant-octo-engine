@@ -2,18 +2,20 @@
 const express = require('express');
 const sequelize = require('./config/connection.js');
 const routes = require('./routes');
+const app = express();
 
 // set up handlebars engine
 const exphbs = require('express-handlebars');
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
 
-const app = express();
+
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+// app.use(express.urlencoded({extended:true}))
+
 
 // set up public folder for client side assets
 app.use(express.static('public'));
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
 
 app.use(routes);
 

@@ -21,16 +21,33 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const gameData = await Game.update({...req.body}, {
+    console.log('put request received');
+    console.log(req.body);
+
+    // update database with move
+    await Game.update({state: req.body}, {
       where: {
-        id: req.params.id,
-      },
-      individualHooks: true,
-    });
-    res.json(gameData);
+        id: req.params.id
+      }
+    })
+    res.status(200).json();
   } catch (err) {
-    res.json(err);
+    res.status(500).json(err);
   }
+
+  // try {
+  //   const gameData = await Game.update({
+  //     state: req.body
+  //   }, {
+  //     where: {
+  //       id: req.params.id,
+  //     },
+  //     //individualHooks: true,
+  //   });
+  //   res.json(gameData);
+  // } catch (err) {
+  //   res.json(err);
+  // }
 })
 
 module.exports = router;
