@@ -10,7 +10,14 @@ router.post('/signup', async (req, res) => {
       username : req.body.username,
       password : req.body.password
     });
-    res.status(200).json("User Created")
+
+    // save session variable
+    req.session.save(() => {
+      req.session.userId = userData.id;
+      req.session.loggedIn = true;
+      res.status(200).json(userData); // don't actually send the password back in here
+    })
+
   } catch (err) {
     res.json(err);
   }
