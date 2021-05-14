@@ -19,9 +19,9 @@ app.use(express.static('public'));
 
 app.use(routes);
 
-app.get('/', (req, res) => {
-  res.render('home');
-})
+// app.get('/', (req, res) => {
+//   res.render('home');
+// })
 
 sequelize.sync({alter : true}).then(() => {
   app.listen(3000)
