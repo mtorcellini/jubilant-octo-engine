@@ -1,5 +1,5 @@
 <h1>Signup</h1>
-<form id="signup" action="/user" method="POST">
+<form id="signup" action="/api/user" method="POST">
   <input name="username" placeholder="user name">
   <input name="password" placeholder="password">
   <button class="submit" type="submit">Submit</button>
@@ -30,7 +30,7 @@
         password : $("#login .password").val()
       }
 
-      fetch('/user/login', {
+      fetch('/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

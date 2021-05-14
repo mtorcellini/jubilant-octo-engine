@@ -20,8 +20,7 @@ app.use(express.static('public'));
 app.use(routes);
 
 app.get('/', (req, res) => {
-  // res.render('home');
-  res.render('login');
+  res.render('home');
 })
 
 sequelize.sync({alter : true}).then(() => {

@@ -39,7 +39,7 @@
 
     // function to get game data, run on page load, run every 5 seconds?
     const getGameData = async () => {
-      fetch(`/game/${id}`)
+      fetch(`/api/game/${id}`)
       .then(data => data.json())
       .then(data => {
         if (data.state.hasOwnProperty("x")) {
@@ -76,7 +76,7 @@
       console.log('gamestate', gameState);
 
       // send player ID, click coordinates
-      return fetch(`/game/${id}`, {
+      return fetch(`/api/game/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
