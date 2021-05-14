@@ -24,6 +24,7 @@
 
     $('#login .submit').on('click', function () {
       event.preventDefault();
+      $('#info').empty();
 
       const data = {
         username : $("#login .username").val(),
@@ -48,6 +49,7 @@
 
     $('#signup .submit').on('click', function() {
       event.preventDefault();
+      $('#info').empty();
 
       const data = {
         username: $('#signup .username').val(),
