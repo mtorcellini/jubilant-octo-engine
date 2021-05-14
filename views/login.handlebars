@@ -12,6 +12,8 @@
   <button class="submit" type="submit">Submit</button>
 </form>
 
+<h2 id="info"></h2>
+
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -37,6 +39,9 @@
       }).then(response => response.json())
       .then(response => {
         console.log(response);
+        if (response == "Incorrect username or password") {
+          $('#info').text("Incorrect username or password")
+        }
       })
 
 
