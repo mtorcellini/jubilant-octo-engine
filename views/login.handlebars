@@ -1,7 +1,15 @@
+<h1>Signup</h1>
 <form id="signup" action="/user" method="POST">
   <input name="username" placeholder="user name">
   <input name="password" placeholder="password">
-  <button type="submit">Submit</button>
+  <button class="submit" type="submit">Submit</button>
+</form>
+
+<h1>Login</h1>
+<form id="login" action="#" method="POST">
+  <input class="username" name="username" placeholder="user name">
+  <input class="password" name="password" placeholder="password">
+  <button class="submit" type="submit">Submit</button>
 </form>
 
 <script
@@ -11,6 +19,31 @@
 
 <script>
   $(document).ready(() => {
+
+    $('#login .submit').on('click', function () {
+      event.preventDefault();
+
+      const data = {
+        username : $("#login .username").val(),
+        password : $("#login .password").val()
+      }
+
+      fetch('/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then(response => response.json())
+      .then(response => {
+        console.log(response);
+      })
+
+
+
+
+
+    })
 
 
 
