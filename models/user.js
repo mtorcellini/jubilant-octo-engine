@@ -11,11 +11,12 @@ const User = sequelize.define('User', {
   },
   username: {
     type: DataTypes.STRING,
-    notNull: true,
+    allowNull: false,
+    unique: true
   },
   password: {
     type: DataTypes.STRING,
-    notNull: true,
+    allowNull: false
   }
 })
 
@@ -24,4 +25,10 @@ User.addHook('beforeCreate', async (user) => {
   return user;
 });
 
+// function to compare attempted login password with actual password THIS IS NOT WORKING HERE
+// User.checkPassword = async function (attemptPW) {
+//   console.log('valid is ', valid);
+//   const valid = await bcrypt.compare(attemptPW, this.password);
+//   return valid;
+// }
 module.exports = User;
