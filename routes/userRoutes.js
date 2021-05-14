@@ -15,7 +15,7 @@ router.post('/signup', async (req, res) => {
     req.session.save(() => {
       req.session.userId = userData.id;
       req.session.loggedIn = true;
-      res.status(200).json(userData); // don't actually send the password back in here
+      res.status(200).json({userData: userData, message: "You are now logged in"}); // don't actually send the password back in here
     })
 
   } catch (err) {
@@ -40,7 +40,13 @@ router.post('/login', async (req, res) => {
       return res.status(400).json("Incorrect username or password");
     }
 
-    res.json('You are now logged in');
+    // save session variable
+    req.session.save(() => {
+      req.session.userId = userData.id;
+      req.session.loggedIn = true;
+      res.status(200).json({userData: userData, message: "You are now logged in"});
+    })
+
 
 
 
