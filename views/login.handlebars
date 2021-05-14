@@ -1,7 +1,7 @@
 <h1>Signup</h1>
-<form id="signup" action="/api/user" method="POST">
-  <input name="username" placeholder="user name">
-  <input name="password" placeholder="password">
+<form id="signup" action="#" method="POST">
+  <input class="username" name="username" placeholder="user name">
+  <input class="password" name="password" placeholder="password">
   <button class="submit" type="submit">Submit</button>
 </form>
 
@@ -36,18 +36,38 @@
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      }).then(response => response.json())
+      })
+      .then(response => response.json())
       .then(response => {
         console.log(response);
         if (response == "Incorrect username or password") {
           $('#info').text("Incorrect username or password")
         }
       })
+    })
 
+    $('#signup .submit').on('click', function() {
+      event.preventDefault();
 
+      const data = {
+        username: $('#signup .username').val(),
+        password: $('#signup .password').val()
+      }
 
-
-
+      fetch('/api/user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     })
 
 
