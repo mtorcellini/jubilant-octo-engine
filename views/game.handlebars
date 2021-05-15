@@ -123,21 +123,17 @@ $(document).ready(() => {
       if (!playerPiece) {
         playerPiece = "x";
       }
+
+    // update local game state
     gameState[playerPiece].push(coords);
 
+    // send gamestate to server
     makeMove(gameState);
   })
 
 
 
-
-
-
-
-
-
-
-  $("#test").on('click', makeMove);
+  $("#test").on('click', () => {});
   $('#makeNew').on('click', makeNewGame);
 
 

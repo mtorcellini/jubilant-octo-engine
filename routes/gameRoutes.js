@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {Game, User} = require('../models');
 
+// get the state of a game
 router.get('/:id', async (req, res) => {
   try {
     const gameData = await Game.findByPk(req.params.id, {
@@ -12,6 +13,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// create a new game
 router.post('/', async (req, res) => {
   try {
     const gameData = await Game.create({});
@@ -21,11 +23,9 @@ router.post('/', async (req, res) => {
   }
 })
 
+// update a game state with a move
 router.put('/:id', async (req, res) => {
   try {
-    console.log('put request received');
-    console.log(req.body);
-
     // update database with move
     const data = await Game.update({state: req.body}, {
       where: {
@@ -36,7 +36,7 @@ router.put('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-  
+
 })
 
 module.exports = router;
