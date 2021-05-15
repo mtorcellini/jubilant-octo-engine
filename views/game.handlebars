@@ -19,21 +19,21 @@
 <script>
 $(document).ready(() => {
 
+  // initialize empty game state
   let gameState = {
     x : [],
     o : []
   };
-
   let gameId;
   let playerPiece;
 
   // hide gameboard initially
-  // $('#gameboard').hide();
+  $('#gameboard').hide();
 
   // hide idText initially
   $('#idText').hide();
 
-  // function for making new Game
+  // function for making a new Game
   const makeNewGame = () => {
     fetch('/api/game', {
       method: 'POST',
@@ -44,7 +44,7 @@ $(document).ready(() => {
     .then(response => response.json())
     .then(response => {
 
-      // set gameId
+      // set gameId according to response
       gameId = response.id;
 
       // show id text
@@ -63,20 +63,19 @@ $(document).ready(() => {
   // function for getting the state of a game
   const getGameData = () => {
 
-    // set game id for testing
+    // set game id for testing purposes
     if (!gameId) {
       gameId = 15;
     }
 
+    // fetch game state by id
     fetch(`/api/game/${gameId}`)
     .then(response => response.json())
     .then(response => {
-      console.log(response);
       const gameState = response.state;
 
       // mark squares according to gamestate
       markSquares(response.state);
-
     })
   }
 
@@ -98,14 +97,11 @@ $(document).ready(() => {
     }
   }
 
-  // function for submitting data of a move being made
+  // function for submitting data of a new move 
   const makeMove = (gameState) => {
-    if (!gameId) {
-      gameId = 15;
-    }
 
-    // send move data to server
-    return fetch(`/api/game/${gameId}`, {
+    // fetch request for making move
+    fetch(`/api/game/${gameId}`, {
       method: 'PUT',
       headers: {
           'Content-Type': 'application/json',
@@ -114,7 +110,9 @@ $(document).ready(() => {
     })
 
     // get newest data from server and mark squares
-    .then(getGameData)
+    .then(() => {
+      getGameData();
+    })
 }
 
   // click listener on gameboard

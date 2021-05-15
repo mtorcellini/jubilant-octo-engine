@@ -36,20 +36,7 @@ router.put('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-
-  // try {
-  //   const gameData = await Game.update({
-  //     state: req.body
-  //   }, {
-  //     where: {
-  //       id: req.params.id,
-  //     },
-  //     //individualHooks: true,
-  //   });
-  //   res.json(gameData);
-  // } catch (err) {
-  //   res.json(err);
-  // }
+  
 })
 
 module.exports = router;
