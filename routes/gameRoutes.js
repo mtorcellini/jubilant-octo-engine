@@ -27,12 +27,12 @@ router.put('/:id', async (req, res) => {
     console.log(req.body);
 
     // update database with move
-    await Game.update({state: req.body}, {
+    const data = await Game.update({state: req.body}, {
       where: {
         id: req.params.id
       }
     })
-    res.status(200).json();
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json(err);
   }
