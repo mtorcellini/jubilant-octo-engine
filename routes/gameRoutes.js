@@ -2,21 +2,41 @@ const router = require('express').Router();
 const {Game, User} = require('../models');
 
 // get the state of a game
-router.get('/:id', async (req, res) => {
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const gameData = await Game.findByPk(req.params.id, {
+//       include: User
+//     });
+//     res.json(gameData);
+//   } catch (err) {
+//     res.json(err);
+//   }
+// });
+
+// get the state of a game (check for session var)
+router.get('/', async (req, res) => {
   try {
-    const gameData = await Game.findByPk(req.params.id, {
-      include: User
-    });
+    let gameData;
+    console.log(req.session.currentGame);
+    if (req.session.currentGame) {
+      gameData = await Game.findByPk(req.session.currentGame, {
+        include: User
+      });
+    }
     res.json(gameData);
   } catch (err) {
     res.json(err);
   }
-});
+})
 
 // create a new game
 router.post('/', async (req, res) => {
   try {
     const gameData = await Game.create({});
+
+    // set session var with current game ID
+    req.session.currentGame = gameData.id;
+
     res.json(gameData);
   } catch (err) {
     res.json(err);

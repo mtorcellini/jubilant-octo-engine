@@ -22,4 +22,13 @@ router.get('/games', (req, res) => {
   })
 })
 
+router.get('/games/:id', (req, res) => {
+
+  // set a session var for this game id
+  req.session.currentGame = req.params.id;
+
+  // render the game page
+  res.render('game', {isNewgame : false})
+})
+
 module.exports = router;
