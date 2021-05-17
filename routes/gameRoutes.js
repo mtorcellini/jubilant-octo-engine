@@ -39,6 +39,9 @@ router.post('/', async (req, res) => {
     // set session var with current game ID
     req.session.currentGame = gameData.id;
 
+    // set random gamePiece
+    
+
     res.json(gameData);
   } catch (err) {
     res.json(err);

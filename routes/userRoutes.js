@@ -47,6 +47,20 @@ router.post('/login', async (req, res) => {
       res.status(200).json({userData: userData, message: "You are now logged in"});
     })
 
+  } catch (err) {
+    res.json(err);
+  }
+})
+
+router.put('/', async (req, res) => {
+  try {
+    console.log('okay');
+    console.log(req.session.userId);
+    await User.update({token : req.body.token}, {
+      where : {
+        id : req.session.userId
+      }
+    });
 
 
 
