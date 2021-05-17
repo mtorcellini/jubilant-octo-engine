@@ -4,6 +4,8 @@
 
 {{#if isNewgame}}
   <p id="idText">You've started a new game with id: <span id="gameIdSpan"></span></p>
+  {{else}}
+    <p id="idText">Welcome to game with id: <span id="gameIdSpan"></span></p>
 {{/if}}
 
 <button id="test">Test Function</button>
@@ -28,12 +30,12 @@ $(document).ready(() => {
   let playerPiece;
 
   // hide gameboard initially
-  $('#gameboard').hide();
+  //$('#gameboard').hide();
 
   // hide idText initially
-  $('#idText').hide();
+  //$('#idText').hide();
 
-  // function for making a new Game
+  // function for making a new Game, server should set a session var with game ID
   const makeNewGame = () => {
     fetch('/api/game', {
       method: 'POST',
@@ -63,19 +65,19 @@ $(document).ready(() => {
   // function for getting the state of a game
   const getGameData = () => {
 
-    // set game id for testing purposes
-    if (!gameId) {
-      gameId = 15;
-    }
-
     // fetch game state by id
-    fetch(`/api/game/${gameId}`)
+    //fetch(`/api/game/${gameId}`)
+    fetch(`/api/game`)
     .then(response => response.json())
     .then(response => {
       const gameState = response.state;
-
+      console.log('gameState', gameState);
       // mark squares according to gamestate
       markSquares(response.state);
+
+      // display game ID
+      $('#gameIdSpan').text(response.id);
+      $('#idText').show();
     })
   }
 
@@ -133,9 +135,13 @@ $(document).ready(() => {
 
 
 
-  $("#test").on('click', () => {});
+  $("#test").on('click', getGameData);
   $('#makeNew').on('click', makeNewGame);
 
+
+
+// run this function to get a game if there is a session variable set
+getGameData();
 
 
 
