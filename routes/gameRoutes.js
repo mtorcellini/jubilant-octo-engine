@@ -22,6 +22,8 @@ router.get('/', async (req, res) => {
       gameData = await Game.findByPk(req.session.currentGame, {
         include: User
       });
+    } else {
+      return res.json({message : "No game selected"})
     }
     res.json(gameData);
   } catch (err) {
