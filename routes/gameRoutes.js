@@ -75,4 +75,17 @@ router.put('/', async (req, res) => {
 
 })
 
+router.delete('/', async (req, res) => {
+  try {
+    await Game.destroy({
+      where: {
+        id: req.session.currentGame
+      }
+    })
+    res.status(200).json()
+  } catch (err) {
+    res.json(err);
+  }
+})
+
 module.exports = router;
