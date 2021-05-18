@@ -51,6 +51,6 @@ app.use(routes);
 //   res.render('home');
 // })
 
-sequelize.sync({alter : true}).then(() => {
+sequelize.sync({force: false}).then(() => {
   app.listen(3000)
 })

@@ -29,3 +29,18 @@ td.col2 {
   border-right: 1px solid #000;
 }
 
+.playerToken {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}
+
+.playerToken[data="red"] {
+  background-color: red;
+}
+.playerToken[data="black"] {
+  background-color: black;
+}
+.playerToken[data="yellow"] {
+  background-color: yellow;
+}

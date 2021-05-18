@@ -12,6 +12,9 @@
 
 {{> gameboard}}
 
+{{!-- <p>Choose your GamePiece</p>
+<div class="playerToken" data="x">x</div>
+<div class="playerToken" data="o">o</div> --}}
 
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -27,7 +30,7 @@ $(document).ready(() => {
     o : []
   };
   let gameId;
-  let playerPiece;
+  let playerToken = "o";
 
   // hide gameboard initially
   //$('#gameboard').hide();
@@ -35,7 +38,7 @@ $(document).ready(() => {
   // hide idText initially
   //$('#idText').hide();
 
-  // function for making a new Game, server should set a session var with game ID
+  // function for making a new Game, server sets a session var with current game ID
   const makeNewGame = () => {
     fetch('/api/game', {
       method: 'POST',
@@ -48,6 +51,7 @@ $(document).ready(() => {
 
       // set gameId according to response
       gameId = response.id;
+      playerToken = "x";
 
       // show id text
       $('#gameIdSpan').text(gameId);
@@ -65,20 +69,19 @@ $(document).ready(() => {
   // function for getting the state of a game
   const getGameData = () => {
 
-    // fetch game state by id
-    //fetch(`/api/game/${gameId}`)
+    // fetch game state by id, server's session vars gets correct game
     fetch(`/api/game`)
-    .then(response => response.json())
-    .then(response => {
-      const gameState = response.state;
-      console.log('gameState', gameState);
-      // mark squares according to gamestate
-      markSquares(response.state);
+      .then(response => response.json())
+      .then(response => {
+        const gameState = response.state;
+        console.log('gameState', gameState);
+        // mark squares according to gamestate
+        markSquares(response.state);
 
-      // display game ID
-      $('#gameIdSpan').text(response.id);
-      $('#idText').show();
-    })
+        // display game ID
+        $('#gameIdSpan').text(response.id);
+        $('#idText').show();
+      })
   }
 
   // function for coloring the squares
@@ -87,14 +90,14 @@ $(document).ready(() => {
       data.x.forEach(xmark => {
         const xCoord = xmark[0];
         const yCoord = xmark[1];
-        $(`.row${yCoord} .col${xCoord}`).css({background : "darkblue", color: "white"}).text("X");
+        $(`.row${yCoord} .col${xCoord}`).css({ background: "darkblue", color: "white" }).text("X");
       });
     }
     if (data.o) {
       data.o.forEach(omark => {
         const xCoord = omark[0];
         const yCoord = omark[1];
-        $(`.row${yCoord} .col${xCoord}`).css({background : "purple", color: "white"}).text("O");
+        $(`.row${yCoord} .col${xCoord}`).css({ background: "purple", color: "white" }).text("O");
       })
     }
   }
@@ -102,32 +105,55 @@ $(document).ready(() => {
   // function for submitting data of a new move 
   const makeMove = (gameState) => {
 
-    // fetch request for making move
-    fetch(`/api/game/${gameId}`, {
+    // send gameState to server
+    fetch(`/api/game`, {
       method: 'PUT',
       headers: {
-          'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
-      body : JSON.stringify(gameState)
+      body: JSON.stringify(gameState)
     })
 
-    // get newest data from server and mark squares
-    .then(() => {
-      getGameData();
+      // get newest data from server and mark squares
+      .then(() => {
+        getGameData();
+      })
+  }
+
+  // function for choosing a game token and updating the database
+  // right now the server is setting the game creator to x and the joiner to o
+  /*
+  $(".playerToken").on("click", async (event) => {
+    playerToken = event.target.getAttribute("data");
+
+    const userData = {
+      token : playerToken
+    }
+
+    fetch('/api/user', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData)
     })
-}
+    .then(response => response.json())
+    .then(response => {
+      console.log(response);
+    })
+
+  })
+  */
+
 
   // click listener on gameboard
   $("#gameboard").on("click", async (event) => {
-      const xcoord = parseInt(event.target.getAttribute("data"));
-      const ycoord = parseInt(event.target.parentElement.getAttribute("data"));
-      const coords = [xcoord, ycoord];
-      if (!playerPiece) {
-        playerPiece = "x";
-      }
+    const xcoord = parseInt(event.target.getAttribute("data"));
+    const ycoord = parseInt(event.target.parentElement.getAttribute("data"));
+    const coords = [xcoord, ycoord];
 
     // update local game state
-    gameState[playerPiece].push(coords);
+    gameState[playerToken].push(coords);
 
     // send gamestate to server
     makeMove(gameState);
@@ -142,6 +168,8 @@ $(document).ready(() => {
 
 // run this function to get a game if there is a session variable set
 getGameData();
+
+const timer = setInterval(getGameData, 5000);
 
 
 
