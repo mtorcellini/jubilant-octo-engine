@@ -2,15 +2,22 @@ const router = require('express').Router();
 const {Game} = require('../models')
 
 router.get('/', (req, res) => {
-  res.render('home');
+  res.render('home', {
+    loggedIn : req.session.loggedIn
+  });
 })
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', {
+    loggedIn: req.session.loggedIn
+  });
 })
 
 router.get('/newgame', (req, res) => {
-  res.render('game', {isNewgame : true});
+  res.render('game', {
+    loggedIn: req.session.loggedIn,
+    isNewgame: true
+  });
 })
 
 router.get('/games', (req, res) => {
@@ -18,7 +25,7 @@ router.get('/games', (req, res) => {
   Game.findAll()
   .then(games => games.map(game => game.get({plain: true})))
   .then(games => {
-    res.render('games', {games})
+    res.render('games', {games, loggedIn: req.session.loggedIn})
   })
 })
 
@@ -28,7 +35,7 @@ router.get('/games/:id', (req, res) => {
   req.session.currentGame = req.params.id;
 
   // render the game page
-  res.render('game', {isNewgame : false})
+  res.render('game', {loggedIn: req.session.loggedIn, isNewgame : false})
 })
 
 module.exports = router;

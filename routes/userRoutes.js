@@ -52,6 +52,19 @@ router.post('/login', async (req, res) => {
   }
 })
 
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+
+    req.session.destroy(() => {
+      res.status(204).json({message: 'logout'});
+    });
+
+  } else {
+    console.log('logout called, but never logged in');
+    res.status(404).end();
+  }
+})
+
 router.put('/', async (req, res) => {
   try {
     console.log('okay');
