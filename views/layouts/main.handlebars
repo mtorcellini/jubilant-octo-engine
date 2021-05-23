@@ -9,9 +9,28 @@
 </head>
 <body>
   <a href="/">Home</a>
+
   <a href="/login">Login</a>
   <a href="/games">Join a Game</a>
   <a href="/newgame">Create a New Game</a>
+  {{#if loggedIn}}
+    <a id="logout" href="#">Logout</a>
+  {{/if}}
   {{{ body }}}
+  <script>
+    if (document.querySelector('#logout')) {
+    document.querySelector('#logout').addEventListener('click', () => {
+      fetch('/api/user/logout', {
+        method: 'POST',
+      })
+        .then(response => {
+          if (response.ok) {
+            location.replace('/');
+          }
+        })
+    })
+    }
+  </script>
 </body>
 </html>
+

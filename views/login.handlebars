@@ -27,8 +27,8 @@
       $('#info').empty();
 
       const data = {
-        username : $("#login .username").val(),
-        password : $("#login .password").val()
+        username: $("#login .username").val(),
+        password: $("#login .password").val()
       }
 
       fetch('/api/user/login', {
@@ -38,13 +38,15 @@
         },
         body: JSON.stringify(data)
       })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        if (response == "Incorrect username or password") {
-          $('#info').text("Incorrect username or password")
-        }
-      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response);
+          if (response == "Incorrect username or password") {
+            $('#info').text("Incorrect username or password")
+          } else if (response.userData) {
+            location.replace('/');
+          }
+        })
     })
 
     $('#signup .submit').on('click', function() {
