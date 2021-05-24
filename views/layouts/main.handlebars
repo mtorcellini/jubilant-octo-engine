@@ -11,9 +11,9 @@
   <a href="/">Home</a>
 
   <a href="/login">Login</a>
+  {{#if loggedIn}}
   <a href="/games">Join a Game</a>
   <a href="/newgame">Create a New Game</a>
-  {{#if loggedIn}}
     <a id="logout" href="#">Logout</a>
   {{/if}}
   {{{ body }}}
