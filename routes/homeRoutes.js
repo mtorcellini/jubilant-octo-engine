@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const {Game} = require('../models')
+const {Game} = require('../models');
+const withAuth = require('../util/auth');
 
 router.get('/', (req, res) => {
   res.render('home', {
@@ -13,14 +14,14 @@ router.get('/login', (req, res) => {
   });
 })
 
-router.get('/newgame', (req, res) => {
+router.get('/newgame', withAuth, (req, res) => {
   res.render('game', {
     loggedIn: req.session.loggedIn,
     isNewgame: true
   });
 })
 
-router.get('/games', (req, res) => {
+router.get('/games', withAuth, (req, res) => {
   // get list of existing games
   Game.findAll()
   .then(games => games.map(game => game.get({plain: true})))
