@@ -82,9 +82,10 @@ router.delete('/', async (req, res) => {
         id: req.session.currentGame
       }
     })
+    req.session.startedGame = false;
     res.status(200).json()
   } catch (err) {
-    res.json(err);
+    res.redirect('/');
   }
 })
 

@@ -20,6 +20,10 @@ const Game = sequelize.define('Game', {
   state: {
     type: DataTypes.JSON,
     defaultValue : "{}"
+  },
+  numplayers: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1
   }
 })
 
