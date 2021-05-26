@@ -44,6 +44,7 @@ $(document).ready(() => {
 
         // MARK BOARD
         if (gameData) {
+          $('#gameboard').show()
           markSquares(gameData.state);
         }
 
