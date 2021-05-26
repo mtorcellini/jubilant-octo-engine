@@ -24,6 +24,12 @@ const Game = sequelize.define('Game', {
   numplayers: {
     type: DataTypes.INTEGER,
     defaultValue: 1
+  },
+  player_one: {
+    type: DataTypes.STRING
+  },
+  player_two: {
+    type: DataTypes.STRING
   }
 })
 
