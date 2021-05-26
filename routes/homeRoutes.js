@@ -35,20 +35,18 @@ router.get('/games', withAuth, (req, res) => {
 })
 
 router.get('/games/:id', (req, res) => {
-
-  // set a session var for this game id
-  req.session.currentGame = req.params.id;
+  req.session.currentGameId = req.params.id;
 
   // set current games numplayers = 2
   Game.update({
-      numplayers: 2
+      numplayers: 2,
+      player_two: req.session.username,
     }, {
       where: {
         id: req.params.id
       }
     })
     .then(() => {
-      // render the game page
       res.render('game', {
         loggedIn: req.session.loggedIn,
         isNewgame: false
