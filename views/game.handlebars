@@ -1,22 +1,52 @@
-<h1>¡game!</h1>
+<div class="container">
+  <div class="row mt-3">
+    <h2 class="text-center">Game <span id="gameIdSpan"></span></h2>
+  </div>
+  <div class="row mt-3">
+      <div class="col">
+        <div class="row">
+          <ul class="list-group-flush">
+            <li class="list-group-item list-group-item-secondary">Player One: <span id="player-one"></span></li>
+            <li class="list-group-item list-group-item-secondary">Player Two: <span id="player-two"></span></li>
+          </ul>
+        </div>
+        <div class="row">
+          {{> gameboard}}
+        </div>
+    </div>
+    <div class="col text-center">
+      <div class="btn-group-vertical" role="group">
+        <button type="button" class="btn btn-outline-dark" id="makeNew">Start New Game</button>
+        <button type="button" class="btn btn-outline-dark" id="playAgain">Play Again</button>
+        <button type="button" class="btn btn-outline-dark" id="leaveGame">Leave Game (and delete)</button>
+        <button type="button" class="btn btn-outline-warning" id="test">Test Function</button>
+      </div>
 
-<button id="makeNew">Start New Game</button>
+      {{!-- {{#if isNewgame}}
+        <p class="alert alert-success" id="idText">You've started a new game with id: <span id="gameIdSpan"></span></p>
+        {{else}}
+          <p class="alert alert-success" id="idText">Welcome to game with id: <span id="gameIdSpan"></span></p>
+      {{/if}} --}}
+    </div>
 
-{{#if isNewgame}}
-  <p id="idText">You've started a new game with id: <span id="gameIdSpan"></span></p>
-  {{else}}
-    <p id="idText">Welcome to game with id: <span id="gameIdSpan"></span></p>
-{{/if}}
 
-<button id="test">Test Function</button>
+  
+  </div>
 
-<p>Player One: <span id="player-one"></span></p>
-<p>Player Two: <span id="player-two"></span></p>
 
-{{> gameboard}}
 
-<button id="leaveGame">Leave Game (and delete)</button>
-<button id="playAgain">Play Again</button>
+
+  
+
+
+
+  
+
+
+
+</div>
+
+
 
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
