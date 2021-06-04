@@ -129,6 +129,6 @@ $(document).ready(() => {
   $('#idText').hide();
   $("#test").on('click', getGameData);
   $('#makeNew').on('click', makeNewGame);
-  const timer = setInterval(getGameData, 5000);
+  const timer = setInterval(getGameData, 2500);
 
 })
