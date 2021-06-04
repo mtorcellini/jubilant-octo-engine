@@ -1,7 +1,17 @@
-<h1>¡Games!</h1>
 
-{{#each games as |game|}}
-<p>
-  <a href="/games/{{id}}">Game {{id}}</a>
-</p>
-{{/each}}
+<div class="container">
+  <div class="row mt-3">
+  </div>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-sm-6">
+      <h1 class="text-center">Games</h1>
+      <div class="list-group">
+        {{#each games as |game|}}
+          <a href="/games/{{id}}" class="list-group-item list-group-item-action">Game {{id}}</a>
+        {{/each}}
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
