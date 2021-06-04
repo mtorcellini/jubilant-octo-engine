@@ -5,8 +5,10 @@ body {
 
 
 #gameboard {
-  background: #777;
+  background: #adb5bd;
   width: 300px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 #gameboard table {
