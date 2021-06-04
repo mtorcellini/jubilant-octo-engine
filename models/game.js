@@ -21,9 +21,9 @@ const Game = sequelize.define('Game', {
     type: DataTypes.JSON,
     defaultValue : "{}"
   },
-  numplayers: {
-    type: DataTypes.INTEGER,
-    defaultValue: 1
+  turn: {
+    type: DataTypes.STING,
+    defaultValue : "player_one"
   },
   player_one: {
     type: DataTypes.STRING
