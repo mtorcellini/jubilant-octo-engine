@@ -22,7 +22,7 @@ const Game = sequelize.define('Game', {
     defaultValue : "{}"
   },
   turn: {
-    type: DataTypes.STING,
+    type: DataTypes.STRING,
     defaultValue : "player_one"
   },
   player_one: {

@@ -44,8 +44,13 @@ router.get('/', async (req, res) => {
 // UPDATE GAME WITH NEW MOVE
 router.put('/', async (req, res) => {
   try {
+    // switch player turn
+    let {turn} = await Game.findByPk(req.session.currentGameId);
+    let newTurn = (turn == "player_one") ? "player_two" : "player_one";
+
     await Game.update({
-      state: req.body
+      state: req.body,
+      turn : newTurn
     }, {
       where: {
         id: req.session.currentGameId
