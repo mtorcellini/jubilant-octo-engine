@@ -42,6 +42,13 @@ $(document).ready(() => {
         // WHO AM I
         PLAYER = response.player;
 
+        // UPDATE LOCAL GAMESTATE
+        if (response.gameData.state) {
+          GAMESTATE.player_one = response.gameData.state.player_one;
+          GAMESTATE.player_two = response.gameData.state.player_two;
+          console.log('GAMESTATE', GAMESTATE)
+        }
+
         // MARK BOARD
         if (gameData) {
           $('#gameboard').show()

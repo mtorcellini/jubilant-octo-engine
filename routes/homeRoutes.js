@@ -23,11 +23,7 @@ router.get('/newgame', withAuth, (req, res) => {
 
 router.get('/games', withAuth, (req, res) => {
   // get list of existing games
-  Game.findAll({
-    where: {
-      numplayers: 1
-    }
-  })
+  Game.findAll({})
   .then(games => games.map(game => game.get({plain: true})))
   .then(games => {
     res.render('games', {games, loggedIn: req.session.loggedIn})
@@ -37,22 +33,32 @@ router.get('/games', withAuth, (req, res) => {
 router.get('/games/:id', (req, res) => {
   req.session.currentGameId = req.params.id;
 
-  // set current games numplayers = 2
-  Game.update({
-      numplayers: 2,
-      player_two: req.session.username,
-    }, {
-      where: {
-        id: req.params.id
+  Game.findByPk(req.params.id)
+  .then(game => {
+      // if player_two is not assigned, assign player_two
+      if (game.player_two == null) {
+        Game.update({
+            numplayers: 2,
+            player_two: req.session.username,
+          }, {
+            where: {
+              id: req.params.id
+            }
+          })
+          .then(() => {
+            res.render('game', {
+              loggedIn: req.session.loggedIn,
+              isNewgame: false
+            })
+          })
+      } else {
+        // if player_two IS assigned, just render the existing game without updating
+        res.render('game', {
+          loggedIn: req.session.loggedIn,
+          isNewGame: false
+        })
       }
     })
-    .then(() => {
-      res.render('game', {
-        loggedIn: req.session.loggedIn,
-        isNewgame: false
-      })
-    })
-
 })
 
 module.exports = router;
