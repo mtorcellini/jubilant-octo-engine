@@ -1,6 +1,6 @@
 
-const Game = require('./Game');
-const User = require('./User');
+const Game = require('./game');
+const User = require('./user');
 
 // Game.belongsToMany(User, {through: 'UserGames'});
 // User.belongsToMany(Game, {through: 'UserGames'});
