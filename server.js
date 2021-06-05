@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>. 
 */
 
+const port = process.env.PORT || 3000;
 
 // express
 const express = require('express');
@@ -48,5 +49,5 @@ app.use(express.static('public'));
 app.use(routes);
 
 sequelize.sync({force: false}).then(() => {
-  app.listen(3000)
+  app.listen(port)
 })
