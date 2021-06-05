@@ -5,16 +5,18 @@ const bcrypt = require('bcrypt');
 // create new user
 router.post('/signup', async (req, res) => {
   try {
-    const userData = await User.create({
-      username : req.body.username,
-      password : req.body.password
-    });
-    req.session.save(() => {
-      req.session.username = userData.username;
-      req.session.userId = userData.id;
-      req.session.loggedIn = true;
-      res.status(200).json({userData: userData, message: "You are now logged in"}); // don't actually send the password back in here
-    })
+    if (req.body.username && req.body.password) {
+      const userData = await User.create({
+        username : req.body.username,
+        password : req.body.password
+      });
+      req.session.save(() => {
+        req.session.username = userData.username;
+        req.session.userId = userData.id;
+        req.session.loggedIn = true;
+        res.status(200).json({userData: userData, message: "You are now logged in"}); // don't actually send the password back in here
+      })
+    }
   } catch (err) {
     res.json(err);
   }
