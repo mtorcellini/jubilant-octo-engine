@@ -9,5 +9,16 @@
         </div>
       </div>
     </div>
+    {{#unless loggedIn }}
+    <div class="col-md">
+      <div class="card mt-3">
+        <div class="card-body">
+          <p class="card-text">
+            <a href="login">Login or signup</a> to continue
+          </p>
+        </div>
+      </div>
+    </div>
+    {{/unless}}
   </div>
 </div>
