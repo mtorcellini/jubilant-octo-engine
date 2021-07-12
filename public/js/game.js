@@ -32,6 +32,17 @@ $(document).ready(() => {
       })
   }
 
+  // PLAY AGAIN
+  const playAgain = () => {
+    // clear squares
+    $('td').css({backgroundColor: "rgba(0,0,0,0)" });
+
+    // make new game
+    makeNewGame();
+
+    // send data to other player that a new game is starting
+  }
+
 
   // GET GAME DATA
   const getGameData = () => {
@@ -136,6 +147,9 @@ $(document).ready(() => {
   $('#idText').hide();
   $("#test").on('click', getGameData);
   $('#makeNew').on('click', makeNewGame);
+  $('#playAgain').on('click', playAgain);
+  // $('#playAgain').on('click', ());
+
   const timer = setInterval(getGameData, 2500);
 
 })
